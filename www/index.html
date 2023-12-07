@@ -13,7 +13,7 @@
     // NCMB アクセスの準備
     let ncmb = new NCMB(appKey, clientKey);
     // 本アプリで使うクラスの指定。const は定数の宣言。変更できない変数と思えば良い。
-    const db = "m";
+    const db = "konndate";
 
     function fetchAll() {
       let TestDataClass = ncmb.DataStore(db);
@@ -51,59 +51,20 @@
         })
     }
 
-    function searchLevel() {
-        let level = parseInt($("#level").val());
-        let TestDataClass = ncmb.DataStore(db);
-        TestDataClass
-        .equalTo("level", level)
-        .fetchAll()
-        .then(function(results) {
-            showResults(results);
-        })
-    }
-
-    function searchLevelLT() {
-        let level = parseInt($("#level").val());
-        let TestDataClass = ncmb.DataStore(db);
-        TestDataClass
-        .lessThan("level", level)
-        .fetchAll()
-        .then(function(results) {
-            showResults(results);
-        })
-    }
-
-    function searchLevelGT() {
-        let level = parseInt($("#level").val());
-        let TestDataClass = ncmb.DataStore(db);
-        TestDataClass
-        .greaterThan("level", level)
-        .fetchAll()
-        .then(function(results) {
-            showResults(results);
-        })
-    }
-
+    
   </script>
 </head>
 
 <body>
-  <h1>mBaaS search</h1>
+  <h1>cooking search</h1>
   <div>
     <label for="name">name:</label>
-    <input id="name" type="text" placeholder="monster name">
+    <input id="name" type="text" placeholder="name">
   </div>
-  <div>
-    <label for="level">level:</label>
-    <input id="level" type="number" placeholder="monster level">
-  </div>
+  
   <div id="button">
     <button class="btn" onclick="fetchAll()">Fetch All</button>
     <button class="btn" onclick="searchName()">Name</button>
-    <br>
-    <button class="btn" onclick="searchLevelLT()">Level &lt</button>
-    <button class="btn" onclick="searchLevel()">Level</button>
-    <button class="btn" onclick="searchLevelGT()">Level &gt</button>
   </div>
   <div id="message">message area</div>
 </body>
