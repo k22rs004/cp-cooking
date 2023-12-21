@@ -24,7 +24,8 @@
     }
 
     let msg = "<table><tr><th>name</th><th>kacl</th></tr>";
-    var F = 0;
+    let msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
+    var CK = 0;
 
     function showResults(results) {
         // テーブルのヘッダを生成
@@ -35,6 +36,10 @@
                 msg += "<td>" + results[i].name + "</td>";
                 msg += "<td class='num'>" + results[i].kcal + "</td>";
                 msg += "</tr>";
+                msg2 += "<tr>";
+                msg2 += "<td>" + results[i].name + "</td>";
+                msg2 += "<td class='num'>" + results[i].kcal + "</td>";
+                msg2 += "</tr>";
                 }
                 // テーブルのテイラを生成
                 msg += "</table>";
@@ -54,15 +59,12 @@
         })
     }
 
-    var CK = 0;
-    let msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
-
     function showcalc(){
-        msg += "<td>"+"合計"+"</td>";
-        msg += "<td class='num'>" + CK + "</td></table>";
-        $("#message").html(msg);
+        msg2 += "<td>"+"合計"+"</td>";
+        msg2 += "<td class='num'>" + CK + "</td></table>";
+        $("#message").html(msg2);
         CK = 0;
-        msg = "<table><tr><th>name</th><th>kacl</th></tr>";
+        msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
     }
 
 
