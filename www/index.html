@@ -31,15 +31,17 @@
         let msg = "<table><tr><th>name</th><th>kacl</th></tr>";
             for (let i = 0; i < results.length; i++) {
                 // 各データを収めた表の列を生成
-                CK += results[i].kcal;
-                msg += "<tr>";
-                msg += "<td>" + results[i].name + "</td>";
-                msg += "<td class='num'>" + results[i].kcal + "</td>";
-                msg += "</tr>";
-                msg2 += "<tr>";
-                msg2 += "<td>" + results[i].name + "</td>";
-                msg2 += "<td class='num'>" + results[i].kcal + "</td>";
-                msg2 += "</tr>";
+                if(results[i].age < 0){
+                    CK += results[i].kcal;
+                    msg += "<tr>";
+                     msg += "<td>" + results[i].name + "</td>";
+                    msg += "<td class='num'>" + results[i].kcal + "</td>";
+                    msg += "</tr>";
+                    msg2 += "<tr>";
+                    msg2 += "<td>" + results[i].name + "</td>";
+                    msg2 += "<td class='num'>" + results[i].kcal + "</td>";
+                    msg2 += "</tr>";
+                }
                 }
                 // テーブルのテイラを生成
                 msg += "</table>";
@@ -64,6 +66,10 @@
         $("#message").html(msg2);
         CK = 0;
         msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
+    }
+
+    function age(){
+        
     }
 
 
