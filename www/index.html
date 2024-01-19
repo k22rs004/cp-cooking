@@ -1,105 +1,175 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'"
+        />
+        <script src="components/loader.js"></script>
+        <link rel="stylesheet" href="components/loader.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <script src="keys.js"></script>
+        <script>
+            // NCMB アクセスの準備
+            let ncmb = new NCMB(appKey, clientKey);
+            // 本アプリで使うクラスの指定。const は定数の宣言。変更できない変数と思えば良い。
+            const db = "konndate";
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-  <script src="components/loader.js"></script>
-  <link rel="stylesheet" href="components/loader.css">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="keys.js"></script>
-  <script>
-    // NCMB アクセスの準備
-    let ncmb = new NCMB(appKey, clientKey);
-    // 本アプリで使うクラスの指定。const は定数の宣言。変更できない変数と思えば良い。
-    const db = "konndate";
+            function fetchAll() {
+              let TestDataClass = ncmb.DataStore(db);
+              TestDataClass.order("name",false).fetchAll()
+                .then(function(results) {
+                  showResults(results);
+                  msg += "</table>";
+                  $("#message").html(msg);
+                })
+            }
 
-    function fetchAll() {
-      let TestDataClass = ncmb.DataStore(db);
-      TestDataClass.order("name",false).fetchAll()
-        .then(function(results) {
-          showResults(results);
-        })
-    }
+            let msg = "<table><tr><th>name</th><th>kacl</th></tr>";
+            let msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
+            let msg3 = "<table><tr><th>name</th><th>kacl</th></tr>";
+            let tmp2 = "";
+            var CK = 0;
+            var CM = 0;
+            var FK = 0;
 
-    let msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
-    var CK = 0;
-
-    function showResults(results) {
-        // テーブルのヘッダを生成
-        let msg = "<table><tr><th>name</th><th>kacl</th></tr>";
-            for (let i = 0; i < results.length; i++) {
-                // 各データを収めた表の列を生成
-                if(results[i].age < 0){
-                    CK += results[i].kcal;
-                    msg += "<tr>";
-                     msg += "<td>" + results[i].name + "</td>";
-                    msg += "<td class='num'>" + results[i].kcal + "</td>";
-                    msg += "</tr>";
-                    msg2 += "<tr>";
-                    msg2 += "<td>" + results[i].name + "</td>";
-                    msg2 += "<td class='num'>" + results[i].kcal + "</td>";
-                    msg2 += "</tr>";
+            function showResults(results) {
+                // テーブルのヘッダを生成
+                let tmp = "";
+                if(FK==0){
+                    msg = "<table><tr><th>name</th><th>kacl</th></tr>";
                 }
+                    for (let i = 0; i < results.length; i++) {
+                        // 各データを収めた表の列を生成
+                        if(results[i].age<0){
+                            CK += results[i].kcal;
+                            tmp += "<tr>";
+                            tmp += "<td>" + results[i].name + "</td>";
+                            tmp += "<td class='num'>" + results[i].kcal + "</td>";
+                            tmp += "</tr>";
+                        }else if(FK==1){
+                            CM += results[i].kcal;
+                            msg3 += "<tr>";
+                            msg3 += "<td>" + results[i].name + "</td>";
+                            msg3 += "<td class='num'>" + results[i].kcal + "</td>";
+                            msg3 += "</tr>";
+                            FK = 0;
+                        }
+                    }
+                        msg += tmp;
+                        msg2 += tmp;
+                        tmp2 += tmp;
+            }
+
+
+            function searchName() {
+                let name = $("#name").val();
+                let TestDataClass = ncmb.DataStore(db);
+                TestDataClass
+                .equalTo("name", name)
+                .fetchAll()
+                .then(function(results) {
+                    showResults(results);
+                    msg += "</table>";
+                    $("#message").html(msg);
+                })
+            }
+
+            function showcalc(){
+                msg2 += "<td>"+"合計"+"</td>";
+                msg2 += "<td class='num'>" + CK + "</td></table>";
+                $("#message").html(msg2);
+                CK = 0;
+                msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
+                msg3 = "<table><tr><th>name</th><th>kacl</th></tr>";
+                tmp2 = "";
+            }
+
+            var ageN = 0;
+            function age(){
+                FK = 1;
+                let age = $("#age").val();
+                if(1<=age&&age<=2){
+                    ageN = 1;
+                }else if(3<=age&&age<=5){
+                    ageN = 2;
+                }else if(6<=age&&age<=7){
+                    ageN = 3;
+                }else if(8<=age&&age<=9){
+                    ageN = 4;
+                }else if(10<=age&&age<=11){
+                    ageN = 5;
+                }else if(12<=age&&age<=14){
+                    ageN = 6;
+                }else if(15<=age&&age<=17){
+                    ageN = 7;
+                }else if(18<=age&&age<=29){
+                    ageN = 8;
+                }else if(30<=age&&age<=49){
+                    ageN = 9;
+                }else if(50<=age&&age<=64){
+                    ageN = 10;
+                }else if(65<=age&&age<=74){
+                    ageN = 11;
+                }else if(75<=age){
+                    ageN = 12;
+                }else{
+                    ageN = 0;
                 }
-                // テーブルのテイラを生成
-                msg += "</table>";
-                $("#message").html(msg);
-    }
+                let TestDataClass = ncmb.DataStore(db);
+                TestDataClass
+                .equalTo("age", ageN)
+                .fetchAll()
+                .then(function(results) {
+                    showResults(results);
+                    msg3 += tmp2;
+                    RK = CM-CK;
+                    if(RK > 0){
+                        msg3+="<tr><td>"+"必要なカロリーは"+"</td>"+"<td class='num'>" + RK + "</td></tr>";
+                        }else{
+                            RK = RK*-1;
+                            msg3+="<tr><td>"+"余分なカロリーは"+"</td>"+"<td class='num'>" + RK + "</td><tr>";
+                }
+                msg3 += "</table>";
+                $("#message").html(msg3);
+                tmp2 = "";
+                msg3 = "<table><tr><th>name</th><th>kacl</th></tr>";
+                msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
+                RK = 0;
+                CK = 0;
+                CM = 0;
+                })
+            }
+            var RK = 0;
+            function maleCalc(){
+                age();
+            }
+        </script>
+    </head>
 
+    <body>
+        <h1>cooking search</h1>
+        <div>
+            <label for="name">name:</label>
+            <input id="name" type="text" placeholder="name" />
+            <br />
+            <label for="name">age:</label>
+            <input id="age" type="number" placeholder="age" />
+        </div>
 
-    function searchName() {
-        let name = $("#name").val();
-        let TestDataClass = ncmb.DataStore(db);
-        TestDataClass
-        .equalTo("name", name)
-        .fetchAll()
-        .then(function(results) {
-            showResults(results);
-        })
-    }
-
-    function showcalc(){
-        msg2 += "<td>"+"合計"+"</td>";
-        msg2 += "<td class='num'>" + CK + "</td></table>";
-        $("#message").html(msg2);
-        CK = 0;
-        msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
-    }
-
-    function age(){
-        
-    }
-
-
-
-
-
-    
-  </script>
-</head>
-
-<body>
-  <h1>cooking search</h1>
-  <div>
-    <label for="name">name:</label>
-    <input id="name" type="text" placeholder="name">
-    <br>
-    <label for="name">age:</label>
-    <input id="age"  type="number" placeholder="age">
-  </div>
-  
-  <div id="button">
-    <button class="btn" onclick="fetchAll()">Fetch All</button>
-    <button class="btn" onclick="searchName()">Name</button>
-    <br>
-    <button class="btn" onclick="showcalc()">Result</button>
-    <button class="btn" onclick="m()">男性</button>
-    <button class="btn" onclick="f()">女性</button>
-
-  </div>
-  <div id="message">message area</div>
-</body>
-
+        <div id="button">
+            <button class="btn" onclick="fetchAll()">Fetch All</button>
+            <button class="btn" onclick="searchName()">Name</button>
+            <br />
+            <button class="btn" onclick="showcalc()">Result</button>
+            <button class="btn" onclick="maleCalc()">男性</button>
+            <button class="btn" onclick="f()">女性</button>
+        </div>
+        <div id="message">message area</div>
+    </body>
 </html>
