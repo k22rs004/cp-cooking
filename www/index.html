@@ -84,10 +84,7 @@
                 msg2 += "<td>"+"合計"+"</td>";
                 msg2 += "<td class='num'>" + CK + "</td></table>";
                 $("#message").html(msg2);
-                CK = 0;
-                msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
-                msg3 = "<table><tr><th>name</th><th>kacl</th></tr>";
-                tmp2 = "";
+                textReset();
             }
 
             var ageN = 0;
@@ -137,12 +134,7 @@
                 }
                 msg3 += "</table>";
                 $("#message").html(msg3);
-                tmp2 = "";
-                msg3 = "<table><tr><th>name</th><th>kacl</th></tr>";
-                msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
-                RK = 0;
-                CK = 0;
-                CM = 0;
+                textReset();
                 })
             }
             var RK = 0;
@@ -152,6 +144,15 @@
 
             function femaleCalc(){
                 age(12);
+            }
+
+            function textReset(){
+                tmp2 = "";
+                msg2 = "<table><tr><th>name</th><th>kacl</th></tr>";
+                msg3 = "<table><tr><th>name</th><th>kacl</th></tr>";
+                RK = 0;
+                CK = 0;
+                CM = 0;
             }
         </script>
     </head>
