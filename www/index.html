@@ -91,33 +91,33 @@
             }
 
             var ageN = 0;
-            function age(){
+            function age(gender){
                 FK = 1;
                 let age = $("#age").val();
                 if(1<=age&&age<=2){
-                    ageN = 1;
+                    ageN = 1+gender;
                 }else if(3<=age&&age<=5){
-                    ageN = 2;
+                    ageN = 2+gender;
                 }else if(6<=age&&age<=7){
-                    ageN = 3;
+                    ageN = 3+gender;
                 }else if(8<=age&&age<=9){
-                    ageN = 4;
+                    ageN = 4+gender;
                 }else if(10<=age&&age<=11){
-                    ageN = 5;
+                    ageN = 5+gender;
                 }else if(12<=age&&age<=14){
-                    ageN = 6;
+                    ageN = 6+gender;
                 }else if(15<=age&&age<=17){
-                    ageN = 7;
+                    ageN = 7+gender;
                 }else if(18<=age&&age<=29){
-                    ageN = 8;
+                    ageN = 8+gender;
                 }else if(30<=age&&age<=49){
-                    ageN = 9;
+                    ageN = 9+gender;
                 }else if(50<=age&&age<=64){
-                    ageN = 10;
+                    ageN = 10+gender;
                 }else if(65<=age&&age<=74){
-                    ageN = 11;
+                    ageN = 11+gender;
                 }else if(75<=age){
-                    ageN = 12;
+                    ageN = 12+gender;
                 }else{
                     ageN = 0;
                 }
@@ -147,7 +147,11 @@
             }
             var RK = 0;
             function maleCalc(){
-                age();
+                age(0);
+            }
+
+            function femaleCalc(){
+                age(12);
             }
         </script>
     </head>
@@ -168,7 +172,7 @@
             <br />
             <button class="btn" onclick="showcalc()">Result</button>
             <button class="btn" onclick="maleCalc()">男性</button>
-            <button class="btn" onclick="f()">女性</button>
+            <button class="btn" onclick="femaleCalc()">女性</button>
         </div>
         <div id="message">message area</div>
     </body>
